@@ -27,6 +27,15 @@ async function processLineByLine() {
     let skippedCount = 0;
     let sku, colour, size;
 
+    // reading from products.json:
+    const jsonFilePath = path.resolve(__dirname, '../products.json');
+    if (fs.existsSync(jsonFilePath)) {
+        let output = fs.readFileSync(jsonFilePath, 'utf-8')
+        if (output.length > 0) {
+            products = JSON.parse(output);
+        }
+    }
+
     for await (const line of rl) {
         let array = line.split(",");
         [sku, colour, size] = array;
@@ -60,11 +69,10 @@ async function processLineByLine() {
 
     let jsonData = JSON.stringify(products);
 
-    // creating a json file:
-    const jsonFilePath = path.resolve(__dirname, '../products.json');
+    // creating a products.json file:
     fs.writeFile(jsonFilePath, jsonData, function(err) {
         if (err) {
-            console.log(err);
+            process.stdout.write(`${err}`);
         }
     });
 }

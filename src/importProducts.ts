@@ -10,6 +10,7 @@ interface product {
 
 let product: product;
 let products: product[] = [];
+let productsMap = new Map<string, product>();
 
 async function processLineByLine() {
     const csvFilePath = path.resolve(__dirname, '../products.csv');
@@ -20,22 +21,44 @@ async function processLineByLine() {
       crlfDelay: Infinity
     });
 
+    let skipFirstLine = true;
+    let createdCount = 0;
+    let unchangedCount = 0;
+    let skippedCount = 0;
     let sku, colour, size;
 
     for await (const line of rl) {
         let array = line.split(",");
         [sku, colour, size] = array;
 
+        if (skipFirstLine) {
+            skipFirstLine = false;
+            continue;
+        } else if (!!!(sku && colour && size) || productsMap.has(sku)) {
+            skippedCount++;
+            if (productsMap.has(sku)) {
+                productsMap.delete(sku);
+                skippedCount++;
+            }
+        } else {
             product = {
                 sku: sku,
                 colour: colour,
                 size: size,
             };
-            
-            products.push(product);
+
+            productsMap.set(sku, product);
+            createdCount++;
+        }
     }
 
+    products = [...productsMap.values()];
+
     console.log(products);
+
+    process.stdout.write(`Number of products created: ${createdCount}\n`);
+    process.stdout.write(`Number of products unchanged: ${unchangedCount}\n`);
+    process.stdout.write(`Number of rows skipped: ${skippedCount}\n`);
 }
 
 processLineByLine();

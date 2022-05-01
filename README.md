@@ -1,6 +1,14 @@
 # recruitment-node-test
 A small test for back-end Javascript candidates
 
+# Candidate's notes: 
+
+## How to run the code:
+
+Before running the below command you need to install typescript.
+In your terminal run: `npm run start` to run the code.
+
+# Test instructions
 ## Overview
 
 Please spend up to 2 hours on this coding challenge. Note that we don't expect you to complete everything listed in the requirements. We have included more than 2 hours worth of work to allow you to still complete some parts if you get stuck. We prefer you to provide less code that is well structured and well tested than more code which is badly structured and has bugs. 

@@ -5,8 +5,9 @@ A small test for back-end Javascript candidates
 
 ## How to run the code:
 
-Before running the below command you need to install typescript.
-In your terminal run: `npm run start` to run the code.
+In your terminal run the following: 
+1. `npm ci` to initialise your project and install the dependencies.
+2. `npm run start` to run the code.
 
 # Test instructions
 ## Overview

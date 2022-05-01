@@ -54,11 +54,19 @@ async function processLineByLine() {
 
     products = [...productsMap.values()];
 
-    console.log(products);
-
     process.stdout.write(`Number of products created: ${createdCount}\n`);
     process.stdout.write(`Number of products unchanged: ${unchangedCount}\n`);
     process.stdout.write(`Number of rows skipped: ${skippedCount}\n`);
+
+    let jsonData = JSON.stringify(products);
+
+    // creating a json file:
+    const jsonFilePath = path.resolve(__dirname, '../products.json');
+    fs.writeFile(jsonFilePath, jsonData, function(err) {
+        if (err) {
+            console.log(err);
+        }
+    });
 }
 
 processLineByLine();

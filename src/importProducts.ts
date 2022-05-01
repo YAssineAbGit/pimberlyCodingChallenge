@@ -19,7 +19,7 @@ let unchangedCount = 0;
 let skippedCount = 0;
 let sku, colour, size;
 
-export async function processLineByLine() {
+async function processLineByLine() {
     const csvFilePath = path.resolve(__dirname, '../products.csv');
     const fileStream = fs.createReadStream(csvFilePath);
   
@@ -102,3 +102,5 @@ export async function processLineByLine() {
 }
 
 processLineByLine();
+
+module.exports = processLineByLine;

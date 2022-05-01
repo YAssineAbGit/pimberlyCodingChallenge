@@ -9,6 +9,12 @@ In your terminal run the following:
 1. `npm ci` to initialise your project and install the dependencies.
 2. `npm run start` to run the code.
 
+## Code is running as expected:
+![Before and after deleting products.json](screenshot.png)
+
+## Faced some issues with jest configuration
+I shall leave this for now.
+
 # Test instructions
 ## Overview
 

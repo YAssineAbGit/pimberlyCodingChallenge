@@ -10,7 +10,7 @@ interface product {
 
 let product: product;
 let products: product[] = [];
-let productsMap = new Map<string, product>();
+let generatedProductsMap = new Map<string, product>();
 
 async function processLineByLine() {
     const csvFilePath = path.resolve(__dirname, '../products.csv');
@@ -50,10 +50,10 @@ async function processLineByLine() {
         if (skipFirstLine) {
             skipFirstLine = false;
             continue;
-        } else if (!!!(sku && colour && size) || productsMap.has(sku)) {
+        } else if (!!!(sku && colour && size) || generatedProductsMap.has(sku)) {
             skippedCount++;
-            if (productsMap.has(sku)) {
-                productsMap.delete(sku);
+            if (generatedProductsMap.has(sku)) {
+                generatedProductsMap.delete(sku);
                 skippedCount++;
             }
         } else {
@@ -63,12 +63,30 @@ async function processLineByLine() {
                 size: size,
             };
 
-            productsMap.set(sku, product);
-            createdCount++;
+            generatedProductsMap.set(sku, product);
+            // createdCount++;
         }
     }
 
-    products = [...productsMap.values()];
+    // If the products.json doesn't exist or has no data then we copy the generated map.
+    if ((!importedProductsMap)) {
+        importedProductsMap = new Map(generatedProductsMap);
+        for (const [sku, product] of generatedProductsMap) {
+                products.push(product);
+                createdCount++;
+          }
+    } else {
+        for (const [sku, product] of generatedProductsMap) {
+            if (!importedProductsMap.has(sku)) {
+                products.push(product);
+                createdCount++;
+            } else {
+                unchangedCount++;
+            }
+          }
+    }
+
+    // products = [...generatedProductsMap.values()];
 
     process.stdout.write(`Number of products created: ${createdCount}\n`);
     process.stdout.write(`Number of products unchanged: ${unchangedCount}\n`);

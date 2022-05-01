@@ -26,6 +26,7 @@ async function processLineByLine() {
     let unchangedCount = 0;
     let skippedCount = 0;
     let sku, colour, size;
+    let importedProductsMap = new Map<string, product>();
 
     // reading from products.json:
     const jsonFilePath = path.resolve(__dirname, '../products.json');
@@ -34,6 +35,12 @@ async function processLineByLine() {
         if (output.length > 0) {
             products = JSON.parse(output);
         }
+    }
+
+    if (products.length) {
+        importedProductsMap = new Map(products.map(object => {
+            return [object.sku, object]
+        }));
     }
 
     for await (const line of rl) {

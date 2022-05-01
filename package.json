@@ -1,0 +1,26 @@
+{
+  "name": "pimberlycodingchallenge",
+  "version": "1.0.0",
+  "description": "A small test for back-end Javascript candidates",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node dest/importProducts.js",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "jest --verbose ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YAssineAbGit/pimberlyCodingChallenge.git"
+  },
+  "keywords": [],
+  "author": "Yassine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YAssineAbGit/pimberlyCodingChallenge/issues"
+  },
+  "homepage": "https://github.com/YAssineAbGit/pimberlyCodingChallenge#readme",
+  "devDependencies": {
+    "jest": "^28.0.3"
+  }
+}
